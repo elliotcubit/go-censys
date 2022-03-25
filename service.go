@@ -14,6 +14,9 @@ const (
 	// DecodedTypeAnyConnect indicates a Service is AnyConnect
 	DecodedTypeAnyConnect = "any_connect"
 
+	// DecodedTypeBacnet indicates a Service is Bacnet
+	DecodedTypeBacnet = "bacnet"
+
 	// DecodedTypeDns indicates a Service is Dns.
 	DecodedTypeDns = "dns"
 )
@@ -117,6 +120,10 @@ type Service struct {
 	// AnyConnect contains information about an AnyConnect service.
 	// It is non-nil when DecodedType is DecodedTypeAnyConnect.
 	AnyConnect *decoded.AnyConnect `json:"any_connect"`
+
+	// Bacnet contains information about an Bacnet service.
+	// It is non-nil when DecodedType is DecodedTypeBacnet.
+	Bacnet *decoded.Bacnet `json:"bacnet"`
 
 	// Dns contains information about a DNS service.
 	// It is non-nil when DecodedType is DecodedTypeDns.
