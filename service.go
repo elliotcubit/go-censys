@@ -8,11 +8,14 @@ import (
 )
 
 const (
-	// DecodedTypeAMQP indicates a Service is AMQP
-	DecodedTypeAMQP = "dns"
+	// DecodedTypeAmqp indicates a Service is Amqp
+	DecodedTypeAmqp = "amqp"
 
-	// DecodedTypeDNS indicates a Service is DNS.
-	DecodedTypeDNS = "dns"
+	// DecodedTypeAnyConnect indicates a Service is AnyConnect
+	DecodedTypeAnyConnect = "any_connect"
+
+	// DecodedTypeDns indicates a Service is Dns.
+	DecodedTypeDns = "dns"
 )
 
 const (
@@ -107,11 +110,15 @@ type Service struct {
 	// If a Service is `Truncated`, it will not have a `Decoded`!
 	Truncated bool `json:"truncated"`
 
-	// AMQP contains information about an AMQP service.
-	// It is non-nil when DecodedType is DecodedTypeAMQP.
-	AMQP *decoded.AMQP `json:"amqp"`
+	// Amqp contains information about an AMQP service.
+	// It is non-nil when DecodedType is DecodedTypeAmqp.
+	Amqp *decoded.Amqp `json:"amqp"`
 
-	// DNS contains information about a DNS service.
-	// It is non-nil when DecodedType is DecodedTypeDNS.
-	DNS *decoded.DNS `json:"dns"`
+	// AnyConnect contains information about an AnyConnect service.
+	// It is non-nil when DecodedType is DecodedTypeAnyConnect.
+	AnyConnect *decoded.AnyConnect `json:"any_connect"`
+
+	// Dns contains information about a DNS service.
+	// It is non-nil when DecodedType is DecodedTypeDns.
+	Dns *decoded.Dns `json:"dns"`
 }
