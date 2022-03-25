@@ -17,6 +17,9 @@ const (
 	// DecodedTypeBacnet indicates a Service is Bacnet
 	DecodedTypeBacnet = "bacnet"
 
+	// DecodedTypeCoap indicates a Service is Coap
+	DecodedTypeCoap = "coap"
+
 	// DecodedTypeDns indicates a Service is Dns.
 	DecodedTypeDns = "dns"
 )
@@ -124,6 +127,10 @@ type Service struct {
 	// Bacnet contains information about an Bacnet service.
 	// It is non-nil when DecodedType is DecodedTypeBacnet.
 	Bacnet *decoded.Bacnet `json:"bacnet"`
+
+	// Coap contains information about an Coap service.
+	// It is non-nil when DecodedType is DecodedTypeCoap.
+	Coap *decoded.Coap `json:"coap"`
 
 	// Dns contains information about a DNS service.
 	// It is non-nil when DecodedType is DecodedTypeDns.
