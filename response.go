@@ -10,6 +10,7 @@ type response struct {
 	Status string           `json:"status"`
 	Error  string           `json:"error"`
 	Result *json.RawMessage `json:"result"`
+	Links  *json.RawMessage `json:"links"`
 }
 
 func (r response) asError() error {
