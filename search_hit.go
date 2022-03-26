@@ -9,6 +9,9 @@ type SearchResult struct {
 
 	// The actual results
 	Hits []SearchHit `json:"hits"`
+
+	// Links to the prev/next pages of results
+	Links SearchResultLinks `json:"links"`
 }
 
 type SearchResultLinks struct {
