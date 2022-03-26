@@ -58,7 +58,13 @@ type Client interface {
 		perPage int,
 		virtualHosts string,
 		cursor string,
-	) (*SearchResult, error)
+	) (*SearchHostsResult, error)
+
+	GetHostNames(
+		ip string,
+		perPage int,
+		cursor string,
+	) ([]string, string, error)
 }
 
 type clientImpl struct {
@@ -152,7 +158,7 @@ func (c *clientImpl) SearchHosts(
 	perPage int,
 	virtualHosts string,
 	cursor string,
-) (*SearchResult, error) {
+) (*SearchHostsResult, error) {
 	path := "/v2/hosts/search"
 	if virtualHosts == "" {
 		virtualHosts = VirtualHostsExclude
@@ -179,11 +185,57 @@ func (c *clientImpl) SearchHosts(
 		return nil, err
 	}
 
-	retv := &SearchResult{}
+	retv := &SearchHostsResult{}
 	err = json.Unmarshal(*jsonResp.Result, retv)
 	if err != nil {
 		return nil, err
 	}
 
 	return retv, nil
+}
+
+func (c *clientImpl) GetHostNames(
+	ip string,
+	perPage int,
+	cursor string,
+) (names []string, nextCursor string, err error) {
+	path := "/v2/hosts/" + ip + "/names"
+	if perPage > 100 {
+		perPage = 100
+	}
+	if perPage <= 0 {
+		perPage = 1
+	}
+
+	qargs := map[string]string{
+		"per_page": strconv.Itoa(perPage),
+	}
+
+	if cursor != "" {
+		qargs["cursor"] = cursor
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, "", err
+	}
+
+	parseRes := &struct {
+		Names []string `json:"names"`
+		Links *struct {
+			Next string `json:"next"`
+		} `json:"links"`
+	}{}
+
+	err = json.Unmarshal(*jsonResp.Result, parseRes)
+	if err != nil {
+		return nil, "", err
+	}
+
+	cursor = ""
+	if parseRes.Links != nil {
+		cursor = parseRes.Links.Next
+	}
+
+	return parseRes.Names, cursor, nil
 }

@@ -1,6 +1,6 @@
 package censys
 
-type SearchResult struct {
+type SearchHostsResult struct {
 	// The Query that produced this result
 	Query string `json:"query"`
 
