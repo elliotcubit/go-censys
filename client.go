@@ -31,9 +31,9 @@ func NewClient(id, secret string, httpClient *http.Client) Client {
 type Client interface {
 	GetHost(ip string, name string, at *time.Time) (*Host, error)
 
-	// GetServiceNameList fetches the list of all possible ServiceNames
-	// that can be on a service; in other words, the types of services scanned.
-	GetServiceNameList() ([]string, error)
+	// GetHostsMetadata fetches metadata about the hosts dataset,
+	// for now, just the list of services that are being scanned.
+	GetHostsMetadata() (*HostMetadata, error)
 }
 
 type clientImpl struct {
@@ -108,16 +108,16 @@ func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, erro
 	return hostResp, nil
 }
 
-func (c *clientImpl) GetServiceNameList() ([]string, error) {
+func (c *clientImpl) GetHostsMetadata() (*HostMetadata, error) {
 	path := "/v2/metadata/hosts"
 	jsonResp, err := c.getReq(path, nil)
 	if err != nil {
 		return nil, err
 	}
-	list := make([]string, 100)
-	err = json.Unmarshal(*jsonResp.Result, &list)
+	retv := &HostMetadata{}
+	err = json.Unmarshal(*jsonResp.Result, retv)
 	if err != nil {
 		return nil, err
 	}
-	return list, nil
+	return retv, nil
 }
