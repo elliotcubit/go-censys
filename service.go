@@ -28,6 +28,9 @@ const (
 
 	// DecodedTypeDns indicates a Service is Dns.
 	DecodedTypeDns = "dns"
+
+	// DecodedTypeElasticsearch indicates a Service is Elasticsearch.
+	DecodedTypeElasticsearch = "elasticsearch"
 )
 
 const (
@@ -130,23 +133,27 @@ type Service struct {
 	// It is non-nil when DecodedType is DecodedTypeAnyConnect.
 	AnyConnect *decoded.AnyConnect `json:"any_connect"`
 
-	// Bacnet contains information about an Bacnet service.
+	// Bacnet contains information about a Bacnet service.
 	// It is non-nil when DecodedType is DecodedTypeBacnet.
 	Bacnet *decoded.Bacnet `json:"bacnet"`
 
-	// Coap contains information about an Coap service.
+	// Coap contains information about a Coap service.
 	// It is non-nil when DecodedType is DecodedTypeCoap.
 	Coap *decoded.Coap `json:"coap"`
 
-	// Cwmp contains information about an Cwmp service.
+	// Cwmp contains information about a Cwmp service.
 	// It is non-nil when DecodedType is DecodedTypeCwmp.
 	Cwmp *decoded.Cwmp `json:"cwmp"`
 
-	// Dnp3 contains information about an Dnp3 service.
+	// Dnp3 contains information about a Dnp3 service.
 	// It is non-nil when DecodedType is DecodedTypeDnp3.
 	Dnp3 *decoded.Dnp3 `json:"dnp3"`
 
 	// Dns contains information about a DNS service.
 	// It is non-nil when DecodedType is DecodedTypeDns.
 	Dns *decoded.Dns `json:"dns"`
+
+	// Elasticsearch contains information about an Elasticsearch service.
+	// It is non-nil when DecodedType is DecodedTypeElasticsearch.
+	Elasticsearch *decoded.Elasticsearch `json:"elasticsearch"`
 }
