@@ -4,11 +4,18 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 )
 
 const (
 	rootURL = "https://search.censys.io/api"
+)
+
+const (
+	VirtualHostsExclude = "EXCLUDE"
+	VirtualHostsInclude = "INCLUDE"
+	VirtualHostsOnly    = "ONLY"
 )
 
 // NewClient creates a new Client with the provided API ID and Secret.
@@ -34,6 +41,24 @@ type Client interface {
 	// GetHostsMetadata fetches metadata about the hosts dataset,
 	// for now, just the list of services that are being scanned.
 	GetHostsMetadata() (*HostMetadata, error)
+
+	// SearchHosts fetches a page of search results for the given query.
+	//
+	// virtualHosts should be one of:
+	//  - The empty string
+	//  - VirtualHostsExclude
+	//  - VirtualHostsInclude
+	//  - VirtualHostsOnly
+	//
+	// When empty, VirtualHostsExclude will be used.
+	//
+	// Cursor may be empty or a valid cursor from a previous call to SearchHosts.
+	SearchHosts(
+		query string,
+		perPage int,
+		virtualHosts string,
+		cursor string,
+	) (*SearchResult, error)
 }
 
 type clientImpl struct {
@@ -119,5 +144,46 @@ func (c *clientImpl) GetHostsMetadata() (*HostMetadata, error) {
 	if err != nil {
 		return nil, err
 	}
+	return retv, nil
+}
+
+func (c *clientImpl) SearchHosts(
+	query string,
+	perPage int,
+	virtualHosts string,
+	cursor string,
+) (*SearchResult, error) {
+	path := "/v2/hosts/search"
+	if virtualHosts == "" {
+		virtualHosts = VirtualHostsExclude
+	}
+	if perPage > 100 {
+		perPage = 100
+	}
+	if perPage <= 0 {
+		perPage = 1
+	}
+
+	qargs := map[string]string{
+		"q":             query,
+		"per_page":      strconv.Itoa(perPage),
+		"virtual_hosts": virtualHosts,
+	}
+
+	if cursor != "" {
+		qargs["cursor"] = cursor
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, err
+	}
+
+	retv := &SearchResult{}
+	err = json.Unmarshal(*jsonResp.Result, retv)
+	if err != nil {
+		return nil, err
+	}
+
 	return retv, nil
 }
