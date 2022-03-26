@@ -30,6 +30,10 @@ func NewClient(id, secret string, httpClient *http.Client) Client {
 // Client is
 type Client interface {
 	GetHost(ip string, name string, at *time.Time) (*Host, error)
+
+	// GetServiceNameList fetches the list of all possible ServiceNames
+	// that can be on a service; in other words, the types of services scanned.
+	GetServiceNameList() ([]string, error)
 }
 
 type clientImpl struct {
@@ -43,26 +47,26 @@ func (c *clientImpl) authedRequest(req *http.Request) (*http.Response, error) {
 	return c.httpClient.Do(req)
 }
 
-func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, error) {
-	url := rootURL + "/v2/hosts/" + ip
-	if name != "" {
-		url += "+" + name
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+func (c *clientImpl) getReq(path string, qargs map[string]string) (*response, error) {
+	req, err := http.NewRequest(http.MethodGet, rootURL+path, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	if at != nil {
+	if len(qargs) > 0 {
 		q := req.URL.Query()
-		q.Add("at_time", (*at).Format(time.RFC3339))
+		for k, v := range qargs {
+			q.Add(k, v)
+		}
 		req.URL.RawQuery = q.Encode()
 	}
 
 	resp, err := c.authedRequest(req)
-	defer resp.Body.Close()
+	if err != nil {
+		return nil, err
+	}
 
+	defer resp.Body.Close()
 	bodyBytes, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
@@ -79,6 +83,22 @@ func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, erro
 		return nil, err
 	}
 
+	return jsonResp, err
+}
+
+func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, error) {
+	path := "/v2/hosts/" + ip
+	if name != "" {
+		path += "+" + name
+	}
+
+	qargs := make(map[string]string)
+	if at != nil {
+		qargs["at_time"] = (*at).Format(time.RFC3339)
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+
 	hostResp := &Host{}
 	err = json.Unmarshal(*jsonResp.Result, hostResp)
 	if err != nil {
@@ -86,4 +106,18 @@ func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, erro
 	}
 
 	return hostResp, nil
+}
+
+func (c *clientImpl) GetServiceNameList() ([]string, error) {
+	path := "/v2/metadata/hosts"
+	jsonResp, err := c.getReq(path, nil)
+	if err != nil {
+		return nil, err
+	}
+	list := make([]string, 100)
+	err = json.Unmarshal(*jsonResp.Result, &list)
+	if err != nil {
+		return nil, err
+	}
+	return list, nil
 }
