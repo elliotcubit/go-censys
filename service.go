@@ -23,6 +23,9 @@ const (
 	// DecodedTypeCwmp indicates a Service is Cwmp
 	DecodedTypeCwmp = "cwmp"
 
+	// DecodedTypeDnp3 indicates a Service is Dnp3
+	DecodedTypeDnp3 = "dnp3"
+
 	// DecodedTypeDns indicates a Service is Dns.
 	DecodedTypeDns = "dns"
 )
@@ -138,6 +141,10 @@ type Service struct {
 	// Cwmp contains information about an Cwmp service.
 	// It is non-nil when DecodedType is DecodedTypeCwmp.
 	Cwmp *decoded.Cwmp `json:"cwmp"`
+
+	// Dnp3 contains information about an Dnp3 service.
+	// It is non-nil when DecodedType is DecodedTypeDnp3.
+	Dnp3 *decoded.Dnp3 `json:"dnp3"`
 
 	// Dns contains information about a DNS service.
 	// It is non-nil when DecodedType is DecodedTypeDns.
