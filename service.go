@@ -20,6 +20,9 @@ const (
 	// DecodedTypeCoap indicates a Service is Coap
 	DecodedTypeCoap = "coap"
 
+	// DecodedTypeCwmp indicates a Service is Cwmp
+	DecodedTypeCwmp = "cwmp"
+
 	// DecodedTypeDns indicates a Service is Dns.
 	DecodedTypeDns = "dns"
 )
@@ -131,6 +134,10 @@ type Service struct {
 	// Coap contains information about an Coap service.
 	// It is non-nil when DecodedType is DecodedTypeCoap.
 	Coap *decoded.Coap `json:"coap"`
+
+	// Cwmp contains information about an Cwmp service.
+	// It is non-nil when DecodedType is DecodedTypeCwmp.
+	Cwmp *decoded.Cwmp `json:"cwmp"`
 
 	// Dns contains information about a DNS service.
 	// It is non-nil when DecodedType is DecodedTypeDns.
