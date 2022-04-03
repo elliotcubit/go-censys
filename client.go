@@ -42,6 +42,16 @@ type Client interface {
 	// for now, just the list of services that are being scanned.
 	GetHostsMetadata() (*HostMetadata, error)
 
+	// GetHostAggregate breaks the results of a query down by
+	// the given field, and returns bucket counts for each potential
+	// field value and the aggregate sum of results for the query.
+	GetHostAggregate(
+		query string,
+		field string,
+		numBuckets int,
+		virtualHosts string,
+	) (*HostAggregate, error)
+
 	// SearchHosts fetches a page of search results for the given query.
 	//
 	// virtualHosts should be one of:
@@ -137,6 +147,43 @@ func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, erro
 	}
 
 	return hostResp, nil
+}
+
+func (c *clientImpl) GetHostAggregate(
+	query string,
+	field string,
+	numBuckets int,
+	virtualHosts string,
+) (*HostAggregate, error) {
+	path := "/v2/hosts/aggregate"
+
+	if numBuckets <= 0 {
+		numBuckets = 50
+	}
+
+	if virtualHosts == "" {
+		virtualHosts = VirtualHostsExclude
+	}
+
+	qargs := map[string]string{
+		"q":             query,
+		"field":         field,
+		"num_buckets":   strconv.Itoa(numBuckets),
+		"virtual_hosts": virtualHosts,
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, err
+	}
+
+	retv := &HostAggregate{}
+	err = json.Unmarshal(*jsonResp.Result, retv)
+	if err != nil {
+		return nil, err
+	}
+
+	return retv, nil
 }
 
 func (c *clientImpl) GetHostsMetadata() (*HostMetadata, error) {
