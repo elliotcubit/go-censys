@@ -103,7 +103,7 @@ type Elasticsearch_NodeInfo_Node_NodeData_JVM struct {
 type Elasticsearch_NodeInfo_Node_NodeData_Module struct {
 	Name           *string  `json:"name"`
 	Version        *string  `json:"version"`
-	ElasticVersion *string  `json:"elastic_versin"`
+	ElasticVersion *string  `json:"elastic_version"`
 	JavaVersion    *string  `json:"java_version"`
 	Desc           *string  `json:"desc"`
 	ClassName      *string  `json:"class_name"`
