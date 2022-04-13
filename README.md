@@ -171,3 +171,7 @@ Note that some endpoints may be listed twice (in separate categories) to match t
 ### Experimental
 
 - [ ] `GET /v2/experimental/hosts/{ip}/events`
+
+## License
+
+MIT
