@@ -1,3 +1,5 @@
+package decoded
+
 type Fox struct {
 	AppName       string `json:"app_name"`
 	AppVersion    string `json:"app_version"`
