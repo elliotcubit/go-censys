@@ -1,3 +1,5 @@
+package decoded
+
 type Ike struct {
 	V1 Ike_V1 `json:"v1"`
 	V2 Ike_V2 `json:"v2"`
