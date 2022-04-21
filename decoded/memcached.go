@@ -9,12 +9,7 @@ type Memcached struct {
 }
 
 type Memcached_Stats struct {
-	AuthEnabledSasl bool                    `json:"auth_enabled_sasl"`
-	Libevent        string                  `json:"libevent"`
-	Other           []Memcached_Stats_Other `json:"other"`
-}
-
-type Memcached_Stats_Other struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	AuthEnabledSasl bool              `json:"auth_enabled_sasl"`
+	Libevent        string            `json:"libevent"`
+	Other           map[string]string `json:"other"`
 }
