@@ -1,3 +1,5 @@
+package decoded
+
 type Ftp struct {
 	AuthSslResponse string `json:"auth_ssl_response"`
 	AuthTlsResponse string `json:"auth_tls_response"`
