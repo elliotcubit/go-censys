@@ -8,8 +8,8 @@ type Amqp struct {
 }
 
 type Amqp_ProtocolID struct {
-	ID   uint64
-	Name string
+	ID   uint64 `json:"id"`
+	Name string `json:"name"`
 }
 
 type Amqp_Version struct {
