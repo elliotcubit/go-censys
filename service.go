@@ -31,6 +31,117 @@ const (
 
 	// DecodedTypeElasticsearch indicates a Service is Elasticsearch.
 	DecodedTypeElasticsearch = "elasticsearch"
+
+	// DecodedTypeFox indicates a Service is Fox.
+	DecodedTypeFox = "fox"
+
+	// DecodedTypeFtp indicates a Service is Ftp.
+	DecodedTypeFtp = "ftp"
+
+	// DecodedTypeIke indicates a Service is Ike.
+	DecodedTypeIke = "ike"
+
+	// DecodedTypeImap indicates a Service is Imap.
+	DecodedTypeImap = "imap"
+
+	// DecodedTypeIpmi indicates a Service is Ipmi.
+	DecodedTypeIpmi = "ipmi"
+
+	// DecodedTypeIpp indicates a Service is Ipp.
+	DecodedTypeIpp = "ipp"
+
+	// DecodedTypeKubernetes indicates a Service is Kubernetes.
+	DecodedTypeKubernetes = "kubernetes"
+
+	// DecodedTypeLdap indicates a Service is Ldap.
+	DecodedTypeLdap = "ldap"
+
+	// DecodedTypeMemcached indicates a Service is Memcached.
+	DecodedTypeMemcached = "memcached"
+
+	// DecodedTypeMms indicates a Service is Mms.
+	DecodedTypeMms = "mms"
+
+	// DecodedTypeModbus indicates a Service is Modbus.
+	DecodedTypeModbus = "modbus"
+
+	// DecodedTypeMongodb indicates a Service is Mongodb.
+	DecodedTypeMongodb = "mongodb"
+
+	// DecodedTypeMqtt indicates a Service is Mqtt.
+	DecodedTypeMqtt = "mqtt"
+
+	// DecodedTypeMssql indicates a Service is Mssql.
+	DecodedTypeMssql = "mssql"
+
+	// DecodedTypeMysql indicates a Service is Mysql.
+	DecodedTypeMysql = "mysql"
+
+	// DecodedTypeNtp indicates a Service is Ntp.
+	DecodedTypeNtp = "ntp"
+
+	// DecodedTypeOpenvpn indicates a Service is Openvpn.
+	DecodedTypeOpenvpn = "openvpn"
+
+	// DecodedTypeOracle indicates a Service is Oracle.
+	DecodedTypeOracle = "oracle"
+
+	// DecodedTypePcAnywhere indicates a Service is PcAnywhere.
+	DecodedTypePcAnywhere = "pc_anywhere"
+
+	// DecodedTypePop3 indicates a Service is Pop3.
+	DecodedTypePop3 = "pop3"
+
+	// DecodedTypePostgres indicates a Service is Postgres.
+	DecodedTypePostgres = "postgres"
+
+	// DecodedTypePptp indicates a Service is Pptp.
+	DecodedTypePptp = "pptp"
+
+	// DecodedTypePrometheus indicates a Service is Prometheus.
+	DecodedTypePrometheus = "prometheus"
+
+	// DecodedTypeRdp indicates a Service is Rdp.
+	DecodedTypeRdp = "rdp"
+
+	// DecodedTypeRedis indicates a Service is Redis.
+	DecodedTypeRedis = "redis"
+
+	// DecodedTypeS7 indicates a Service is S7.
+	DecodedTypeS7 = "s7"
+
+	// DecodedTypeSip indicates a Service is Sip.
+	DecodedTypeSip = "sip"
+
+	// DecodedTypeSkinny indicates a Service is Skinny.
+	DecodedTypeSkinny = "skinny"
+
+	// DecodedTypeSmtp indicates a Service is Smtp.
+	DecodedTypeSmtp = "smtp"
+
+	// DecodedTypeSnmp indicates a Service is Snmp.
+	DecodedTypeSnmp = "snmp"
+
+	// DecodedTypeSsdp indicates a Service is Ssdp.
+	DecodedTypeSsdp = "ssdp"
+
+	// DecodedTypeSsh indicates a Service is Ssh.
+	DecodedTypeSsh = "ssh"
+
+	// DecodedTypeTeamViewer indicates a Service is TeamViewer.
+	DecodedTypeTeamViewer = "team_viewer"
+
+	// DecodedTypeTelnet indicates a Service is Telnet.
+	DecodedTypeTelnet = "telnet"
+
+	// DecodedTypeUpnp indicates a Service is Upnp.
+	DecodedTypeUpnp = "upnp"
+
+	// DecodedTypeVnc indicates a Service is Vnc.
+	DecodedTypeVnc = "vnc"
+
+	// DecodedTypeX11 indicates a Service is X11.
+	DecodedTypeX11 = "x11"
 )
 
 const (
@@ -156,4 +267,156 @@ type Service struct {
 	// Elasticsearch contains information about an Elasticsearch service.
 	// It is non-nil when DecodedType is DecodedTypeElasticsearch.
 	Elasticsearch *decoded.Elasticsearch `json:"elasticsearch"`
+
+	// Fox contains information about an Fox service.
+	// It is non-nil when DecodedType is DecodedTypeFox.
+	Fox *decoded.Elasticsearch `json:"fox"`
+
+	// Ftp contains information about an Ftp service.
+	// It is non-nil when DecodedType is DecodedTypeFtp.
+	Ftp *decoded.Ftp `json:"ftp"`
+
+	// Http contains information about an Http service.
+	// It is non-nil when DecodedType is DecodedTypeHttp.
+	Http *decoded.Http `json:"http"`
+
+	// Ike contains information about an Ike service.
+	// It is non-nil when DecodedType is DecodedTypeIke.
+	Ike *decoded.Ike `json:"ike"`
+
+	// Imap contains information about an Imap service.
+	// It is non-nil when DecodedType is DecodedTypeImap.
+	Imap *decoded.Imap `json:"imap"`
+
+	// Ipmi contains information about an Ipmi service.
+	// It is non-nil when DecodedType is DecodedTypeIpmi.
+	Ipmi *decoded.Ipmi `json:"ipmi"`
+
+	// Ipp contains information about an Ipp service.
+	// It is non-nil when DecodedType is DecodedTypeIpp.
+	Ipp *decoded.Ipp `json:"ipp"`
+
+	// Kubernetes contains information about an Kubernetes service.
+	// It is non-nil when DecodedType is DecodedTypeKubernetese
+	Kubernetes *decoded.Kubernetes `json:"kubernetes"`
+
+	// Ldap contains information about an Ldap service.
+	// It is non-nil when DecodedType is DecodedTypeLdap
+	Ldap *decoded.Ldap `json:"ldap"`
+
+	// Memcached contains information about an Memcached service.
+	// It is non-nil when DecodedType is DecodedTypeMemcached
+	Memcached *decoded.Memcached `json:"memcached"`
+
+	// Mms contains information about an Mms service.
+	// It is non-nil when DecodedType is DecodedTypeMms
+	Mms *decoded.Mms `json:"mms"`
+
+	// Modbus contains information about an Modbus service.
+	// It is non-nil when DecodedType is DecodedTypeModbus
+	Modbus *decoded.Modbus `json:"modbus"`
+
+	// Mongodb contains information about an Mongodb service.
+	// It is non-nil when DecodedType is DecodedTypeMongodb
+	Mongodb *decoded.Mongodb `json:"mongodb"`
+
+	// Mqtt contains information about an Mqtt service.
+	// It is non-nil when DecodedType is DecodedTypeMqtt
+	Mqtt *decoded.Mqtt `json:"mqtt"`
+
+	// Mssql contains information about an Mssql service.
+	// It is non-nil when DecodedType is DecodedTypeMssql
+	Mssql *decoded.Mssql `json:"mssql"`
+
+	// Mysql contains information about an Mysql service.
+	// It is non-nil when DecodedType is DecodedTypeMysql
+	Mysql *decoded.Mysql `json:"mysql"`
+
+	// Ntp contains information about an Ntp service.
+	// It is non-nil when DecodedType is DecodedTypeNtp
+	Ntp *decoded.Ntp `json:"ntp"`
+
+	// Openvpn contains information about an Openvpn service.
+	// It is non-nil when DecodedType is DecodedTypeOpenvpn
+	Openvpn *decoded.Openvpn `json:"openvpn"`
+
+	// Oracle contains information about an Oracle service.
+	// It is non-nil when DecodedType is DecodedTypeOracle
+	Oracle *decoded.Oracle `json:"oracle"`
+
+	// PcAnywhere contains information about an PcAnywhere service.
+	// It is non-nil when DecodedType is DecodedTypePcAnywhere
+	PcAnywhere *decoded.PcAnywhere `json:"pc_anywhere"`
+
+	// Pop3 contains information about an Pop3 service.
+	// It is non-nil when DecodedType is DecodedTypePop3
+	Pop3 *decoded.Pop3 `json:"pop3"`
+
+	// Postgres contains information about an Postgres service.
+	// It is non-nil when DecodedType is DecodedTypePostgres
+	Postgres *decoded.Postgres `json:"postgres"`
+
+	// Pptp contains information about an Pptp service.
+	// It is non-nil when DecodedType is DecodedTypePptp
+	Pptp *decoded.Pptp `json:"pptp"`
+
+	// Prometheus contains information about an Prometheus service.
+	// It is non-nil when DecodedType is DecodedTypePrometheus
+	Prometheus *decoded.Prometheus `json:"prometheus"`
+
+	// Rdp contains information about an Rdp service.
+	// It is non-nil when DecodedType is DecodedTypeRdp
+	Rdp *decoded.Rdp `json:"rdp"`
+
+	// Redis contains information about an Redis service.
+	// It is non-nil when DecodedType is DecodedTypeRedis
+	Redis *decoded.Redis `json:"redis"`
+
+	// S7 contains information about an S7 service.
+	// It is non-nil when DecodedType is DecodedTypeS7
+	S7 *decoded.S7 `json:"s7"`
+
+	// Sip contains information about an Sip service.
+	// It is non-nil when DecodedType is DecodedTypeSip
+	Sip *decoded.Sip `json:"sip"`
+
+	// Skinny contains information about an Skinny service.
+	// It is non-nil when DecodedType is DecodedTypeSkinny
+	Skinny *decoded.Skinny `json:"skinny"`
+
+	// Smtp contains information about an Smtp service.
+	// It is non-nil when DecodedType is DecodedTypeSmtp
+	Smtp *decoded.Smtp `json:"smtp"`
+
+	// Snmp contains information about an Snmp service.
+	// It is non-nil when DecodedType is DecodedTypeSnmp
+	Snmp *decoded.Snmp `json:"snmp"`
+
+	// Ssdp contains information about an Ssdp service.
+	// It is non-nil when DecodedType is DecodedTypeSsdp
+	Ssdp *decoded.Ssdp `json:"ssdp"`
+
+	// Ssh contains information about an Ssh service.
+	// It is non-nil when DecodedType is DecodedTypeSsh
+	Ssh *decoded.Ssh `json:"ssh"`
+
+	// TeamViewer contains information about an TeamViewer service.
+	// It is non-nil when DecodedType is DecodedTypeTeamViewer.
+	TeamViewer *decoded.TeamViewer `json:"team_viewer"`
+
+	// Telnet contains information about an Telnet service.
+	// It is non-nil when DecodedType is DecodedTypeTelnet
+	Telnet *decoded.Telnet `json:"telnet"`
+
+	// Upnp contains information about an Upnp service.
+	// It is non-nil when DecodedType is DecodedTypeUpnp
+	Upnp *decoded.Upnp `json:"upnp"`
+
+	// Vnc contains information about an Vnc service.
+	// It is non-nil when DecodedType is DecodedTypeVnc
+	Vnc *decoded.Vnc `json:"vnc"`
+
+	// X11 contains information about an X11 service.
+	// It is non-nil when DecodedType is DecodedTypeX11
+	X11 *decoded.X11 `json:"x11"`
 }
