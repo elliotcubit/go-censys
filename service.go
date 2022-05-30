@@ -225,6 +225,9 @@ type Service struct {
 	// TLS contains the TLS certificate of the service, if it is presenting one.
 	TLS *decoded.TLS `json:"tls"`
 
+	// Jarm contains the Jarm fingerprint of the service, if it is available.
+	Jarm *decoded.Jarm `json:"jarm"`
+
 	// TransportProtocol is the OSI Layer 4 protocol over which this Service's scan
 	// was conducted. See `TransprotProtocolTCP`/etc for potential values.
 	TransportProtocol string `json:"transport_protocol"`
