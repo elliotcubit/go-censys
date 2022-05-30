@@ -139,6 +139,9 @@ func (c *clientImpl) GetHost(ip string, name string, at *time.Time) (*Host, erro
 	}
 
 	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, err
+	}
 
 	hostResp := &Host{}
 	err = json.Unmarshal(*jsonResp.Result, hostResp)
