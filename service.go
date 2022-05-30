@@ -1,7 +1,6 @@
 package censys
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/elliotcubit/go-censys/decoded"
@@ -224,7 +223,7 @@ type Service struct {
 	SourceIP string `json:"source_ip"`
 
 	// TLS contains the TLS certificate of the service, if it is presenting one.
-	TLS *json.RawMessage `json:"tls"`
+	TLS *decoded.TLS `json:"tls"`
 
 	// TransportProtocol is the OSI Layer 4 protocol over which this Service's scan
 	// was conducted. See `TransprotProtocolTCP`/etc for potential values.
