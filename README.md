@@ -37,7 +37,13 @@ func main() {
 
 	// The last (empty string) argument here is a token for fetching results
 	// beyond the first page using the token in the returned `results`.
-	results, err := client.SearchHosts("ip: 209.216.230.240", 100, censys.VirtualHostsInclude, "")
+	results, err := client.SearchHosts(
+		"ip: 209.216.230.240",
+		100,
+		censys.VirtualHostsInclude,
+		censys.SortRelevance,
+		"",
+	)
 	if err != nil {
 		fmt.Printf("Error fetching search results: %s\n", err.Error())
 		return

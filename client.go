@@ -18,6 +18,13 @@ const (
 	VirtualHostsOnly    = "ONLY"
 )
 
+const (
+	SortRelevance  = "RELEVANCE"
+	SortAscending  = "ASCENDING"
+	SortDescending = "DESCENDING"
+	SortRandom     = "RANDOM"
+)
+
 // NewClient creates a new Client with the provided API ID and Secret.
 // If httpClient is provided, it will be used for all requests.
 // Otherwise, a default is used.
@@ -67,6 +74,7 @@ type Client interface {
 		query string,
 		perPage int,
 		virtualHosts string,
+		sortOrder string,
 		cursor string,
 	) (*SearchHostsResult, error)
 
@@ -207,9 +215,13 @@ func (c *clientImpl) SearchHosts(
 	query string,
 	perPage int,
 	virtualHosts string,
+	sortOrder string,
 	cursor string,
 ) (*SearchHostsResult, error) {
 	path := "/v2/hosts/search"
+	if sortOrder == "" {
+		sortOrder = SortRelevance
+	}
 	if virtualHosts == "" {
 		virtualHosts = VirtualHostsExclude
 	}
@@ -224,6 +236,7 @@ func (c *clientImpl) SearchHosts(
 		"q":             query,
 		"per_page":      strconv.Itoa(perPage),
 		"virtual_hosts": virtualHosts,
+		"sort":          sortOrder,
 	}
 
 	if cursor != "" {
