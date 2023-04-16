@@ -1,11 +1,15 @@
 package censys
 
 import (
+	"encoding/hex"
 	"encoding/json"
 	"io"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
+
+	"github.com/elliotcubit/go-censys/certificate"
 )
 
 const (
@@ -57,7 +61,7 @@ type Client interface {
 		field string,
 		numBuckets int,
 		virtualHosts string,
-	) (*HostAggregate, error)
+	) (*Aggregate, error)
 
 	// SearchHosts fetches a page of search results for the given query.
 	//
@@ -83,6 +87,23 @@ type Client interface {
 		perPage int,
 		cursor string,
 	) ([]string, string, error)
+
+	GetCertificate(sha256fp []byte) (*certificate.Certificate, error)
+
+	GetBulkCertificates(sha256fps [][]byte) ([]certificate.Certificate, error)
+
+	// TODO: Support fields / sort
+	SearchCertificates(
+		query string,
+		perPage int,
+		cursor string,
+	) (*SearchCertificatesResult, error)
+
+	GetCertificateAggregate(
+		query string,
+		field string,
+		numBuckets int,
+	) (*Aggregate, error)
 }
 
 type clientImpl struct {
@@ -165,7 +186,7 @@ func (c *clientImpl) GetHostAggregate(
 	field string,
 	numBuckets int,
 	virtualHosts string,
-) (*HostAggregate, error) {
+) (*Aggregate, error) {
 	path := "/v2/hosts/aggregate"
 
 	if numBuckets <= 0 {
@@ -188,7 +209,7 @@ func (c *clientImpl) GetHostAggregate(
 		return nil, err
 	}
 
-	retv := &HostAggregate{}
+	retv := &Aggregate{}
 	err = json.Unmarshal(*jsonResp.Result, retv)
 	if err != nil {
 		return nil, err
@@ -301,4 +322,114 @@ func (c *clientImpl) GetHostNames(
 	}
 
 	return parseRes.Names, cursor, nil
+}
+
+func (c *clientImpl) GetCertificate(sha256fp []byte) (*certificate.Certificate, error) {
+	path := "/v2/certificates/" + hex.EncodeToString(sha256fp)
+
+	jsonResp, err := c.getReq(path, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	certResp := &certificate.Certificate{}
+	err = json.Unmarshal(*jsonResp.Result, certResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return certResp, nil
+}
+
+func (c *clientImpl) GetBulkCertificates(sha256fps [][]byte) ([]certificate.Certificate, error) {
+	path := "/v2/certificates/bulk"
+
+	fps := make([]string, len(sha256fps))
+	for i, v := range sha256fps {
+		fps[i] = hex.EncodeToString(v)
+	}
+
+	qargs := map[string]string{
+		"fingerprints": strings.Join(fps, ","),
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, err
+	}
+
+	certResp := make([]certificate.Certificate, 0)
+	err = json.Unmarshal(*jsonResp.Result, &certResp)
+	if err != nil {
+		return nil, err
+	}
+
+	return certResp, nil
+}
+
+func (c *clientImpl) SearchCertificates(
+	query string,
+	perPage int,
+	cursor string,
+) (*SearchCertificatesResult, error) {
+	path := "/v2/certificates/search"
+	if perPage > 100 {
+		perPage = 100
+	}
+	if perPage <= 0 {
+		perPage = 1
+	}
+
+	qargs := map[string]string{
+		"q":        query,
+		"per_page": strconv.Itoa(perPage),
+	}
+
+	if cursor != "" {
+		qargs["cursor"] = cursor
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, err
+	}
+
+	retv := &SearchCertificatesResult{}
+	err = json.Unmarshal(*jsonResp.Result, retv)
+	if err != nil {
+		return nil, err
+	}
+
+	return retv, nil
+}
+
+func (c *clientImpl) GetCertificateAggregate(
+	query string,
+	field string,
+	numBuckets int,
+) (*Aggregate, error) {
+	path := "/v2/certificates/aggregate"
+
+	if numBuckets <= 0 {
+		numBuckets = 50
+	}
+
+	qargs := map[string]string{
+		"q":           query,
+		"field":       field,
+		"num_buckets": strconv.Itoa(numBuckets),
+	}
+
+	jsonResp, err := c.getReq(path, qargs)
+	if err != nil {
+		return nil, err
+	}
+
+	retv := &Aggregate{}
+	err = json.Unmarshal(*jsonResp.Result, retv)
+	if err != nil {
+		return nil, err
+	}
+
+	return retv, nil
 }
