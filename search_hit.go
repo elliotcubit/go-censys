@@ -1,5 +1,19 @@
 package censys
 
+type SearchCertificatesResult struct {
+	// The Query that produced this result
+	Query string `json:"query"`
+
+	// The Total number of hits
+	Total float64 `json:"total"`
+
+	// The actual results
+	Hits []SearchCertificateHit `json:"hits"`
+
+	// Links to the prev/next pages of results
+	Links SearchResultLinks `json:"links"`
+}
+
 type SearchHostsResult struct {
 	// The Query that produced this result
 	Query string `json:"query"`
@@ -8,7 +22,7 @@ type SearchHostsResult struct {
 	Total int `json:"total"`
 
 	// The actual results
-	Hits []SearchHit `json:"hits"`
+	Hits []SearchHostHit `json:"hits"`
 
 	// Links to the prev/next pages of results
 	Links SearchResultLinks `json:"links"`
@@ -22,7 +36,7 @@ type SearchResultLinks struct {
 	Next string `json:"next"`
 }
 
-type SearchHit struct {
+type SearchHostHit struct {
 	// IP is the IP address of the host.
 	IP string `json:"ip"`
 
@@ -40,6 +54,11 @@ type SearchHit struct {
 
 	// AutonomousSystem countains routing information for the host.
 	AutonomousSystem AutonomousSystem `json:"autonomous_system"`
+}
+
+type SearchCertificateHit struct {
+	// FingerprintSha256 is the SHA256 fingerprint of this certificate
+	FingerprintSha256 string `json:"ip"`
 }
 
 // SmallService is a Service with most fields removed.

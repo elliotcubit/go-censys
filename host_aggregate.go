@@ -1,15 +1,15 @@
 package censys
 
-type HostAggregate struct {
-	Total              int                   `json:"total"`
-	TotalOmitted       int                   `json:"total_omitted"`
-	PotentialDeviation int                   `json:"potential_deviation"`
-	Buckets            []HostAggregateBucket `json:"buckets"`
-	Query              string                `json:"query"`
-	Field              string                `json:"field"`
+type Aggregate struct {
+	Total              float64           `json:"total"`
+	TotalOmitted       float64           `json:"total_omitted"`
+	PotentialDeviation float64           `json:"potential_deviation"`
+	Buckets            []AggregateBucket `json:"buckets"`
+	Query              string            `json:"query"`
+	Field              string            `json:"field"`
 }
 
-type HostAggregateBucket struct {
-	Key   string `json:"key"`
-	Count int    `json:"count"`
+type AggregateBucket struct {
+	Key   string  `json:"key"`
+	Count float64 `json:"count"`
 }

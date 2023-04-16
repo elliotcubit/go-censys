@@ -51,7 +51,7 @@ type Validation_Result struct {
 	HasTrustedPath  bool                      `json:"has_trusted_path"`
 	InRevocationSet bool                      `json:"in_revocation_set"`
 	IsValid         bool                      `json:"is_valid"`
-	Parents         string                    `json:"parents"`
+	Parents         []string                  `json:"parents"`
 }
 
 type Validation_Result_Chain struct {
@@ -170,22 +170,22 @@ type ObjectIdentifier struct {
 }
 
 type Extensions struct {
-	AuthorityInfoAccess         AuthorityInfoAccess         `json:"authority_info_access"`
-	AuthorityKeyId              string                      `json:"authority_key_id"`
-	BasicConstraints            BasicConstraints            `json:"basic_constraints"`
-	CabfOrganizationId          CabfOrganizationId          `json:"cabf_organization_id"`
-	CertificatePolicies         CertificatePolicies         `json:"certificate_policies"`
-	CrlDistributionPoints       []string                    `json:"crl_distribution_points"`
-	CtPoison                    bool                        `json:"ct_poison"`
-	SignedCertificateTimestamps SignedCertificateTimestamps `json:"signed_certificate_timestamps"`
-	ExtendedKeyUsage            ExtendedKeyUsage            `json:"extended_key_usage"`
-	IssuerAltName               AltName                     `json:"issuer_alt_name"`
-	KeyUsage                    KeyUsage                    `json:"key_usage"`
-	NameConstraints             NameConstraints             `json:"name_constraints"`
-	QcStatements                QcStatements                `json:"qc_statements"`
-	SubjectAltName              AltName                     `json:"subject_alt_name"`
-	SubjectKeyId                string                      `json:"subject_key_id"`
-	TorServiceDescriptors       TorServiceDescriptors       `json:"tor_service_descriptors"`
+	AuthorityInfoAccess         AuthorityInfoAccess          `json:"authority_info_access"`
+	AuthorityKeyId              string                       `json:"authority_key_id"`
+	BasicConstraints            BasicConstraints             `json:"basic_constraints"`
+	CabfOrganizationId          CabfOrganizationId           `json:"cabf_organization_id"`
+	CertificatePolicies         []CertificatePolicy          `json:"certificate_policies"`
+	CrlDistributionPoints       []string                     `json:"crl_distribution_points"`
+	CtPoison                    bool                         `json:"ct_poison"`
+	SignedCertificateTimestamps []SignedCertificateTimestamp `json:"signed_certificate_timestamps"`
+	ExtendedKeyUsage            ExtendedKeyUsage             `json:"extended_key_usage"`
+	IssuerAltName               AltName                      `json:"issuer_alt_name"`
+	KeyUsage                    KeyUsage                     `json:"key_usage"`
+	NameConstraints             NameConstraints              `json:"name_constraints"`
+	QcStatements                QcStatements                 `json:"qc_statements"`
+	SubjectAltName              AltName                      `json:"subject_alt_name"`
+	SubjectKeyId                string                       `json:"subject_key_id"`
+	TorServiceDescriptors       TorServiceDescriptors        `json:"tor_service_descriptors"`
 }
 
 type TorServiceDescriptors struct {
@@ -373,7 +373,7 @@ type ExtendedKeyUsage struct {
 	Unknown                        string `json:"unknown"`
 }
 
-type SignedCertificateTimestamps struct {
+type SignedCertificateTimestamp struct {
 	LogId     string                                `json:"log_id"`
 	Signature SignedCertificateTimestamps_Signature `json:"signature"`
 	Timestamp time.Time                             `json:"timestamp"`
@@ -386,18 +386,18 @@ type SignedCertificateTimestamps_Signature struct {
 	SignatureAlgorithm string `json:"signature_algorithm"`
 }
 
-type CertificatePolicies struct {
-	Cps        string                         `json:"cps"`
+type CertificatePolicy struct {
+	Cps        []string                       `json:"cps"`
 	Id         string                         `json:"id"`
-	UserNotice CertificatePolicies_UserNotice `json:"user_notice"`
+	UserNotice []CertificatePolicy_UserNotice `json:"user_notice"`
 }
 
-type CertificatePolicies_UserNotice struct {
-	ExplicitText    string                                         `json:"explicit_text"`
-	NoticeReference CertificatePolicies_UserNotice_NoticeReference `json:"notice_reference"`
+type CertificatePolicy_UserNotice struct {
+	ExplicitText    string                                       `json:"explicit_text"`
+	NoticeReference CertificatePolicy_UserNotice_NoticeReference `json:"notice_reference"`
 }
 
-type CertificatePolicies_UserNotice_NoticeReference struct {
+type CertificatePolicy_UserNotice_NoticeReference struct {
 	NoticeNumbers []int  `json:"notice_numbers"`
 	Organization  string `json:"organization"`
 }

@@ -111,15 +111,14 @@ Note that some endpoints may be listed twice (in separate categories) to match t
 - [ ] `PUT /v2/hosts/{ip}/tags/{id}`
 - [ ] `DELETE /v2/hosts/{ip}/tags/{id}`
 
-### Certificates V1
-
-- [ ] `GET /v1/view/certificates/{sha256}`
-- [ ] `POST /v1/search/certificates`
-- [ ] `POST /v1/report/certificates`
-- [ ] `POST /v1/bulk/certificates`
-
 ### Certificates V2
 
+- [X] `GET /v2/certificates/{fingerprint}`
+- [X] `GET /v2/certificates/bulk`
+- [ ] `POST /v2/certificates/bulk`
+- [X] `GET /v2/certificates/search`
+- [ ] `POST /v2/certificates/search`
+- [X] `GET /v2/certificates/aggregate`
 - [ ] `GET /v2/certificates/{fingerprint}/hosts`
 - [ ] `GET /v2/certificates/{fingerprint}/comments`
 - [ ] `POST /v2/certificates/{fingerprint}/comments`
