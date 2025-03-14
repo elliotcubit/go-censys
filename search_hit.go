@@ -58,7 +58,7 @@ type SearchHostHit struct {
 
 type SearchCertificateHit struct {
 	// FingerprintSha256 is the SHA256 fingerprint of this certificate
-	FingerprintSha256 string `json:"ip"`
+	FingerprintSha256 string `json:"fingerprint_sha256"`
 }
 
 // SmallService is a Service with most fields removed.
