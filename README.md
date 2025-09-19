@@ -1,5 +1,7 @@
 # go-censys
 
+:warning: This project is for interacting with an API that no longer exists. I recommend using the official [Censys Go SDK](https://github.com/censys/censys-sdk-go/blob/main/models/components/edipartyname.go) instead. :warning:
+
 `go-censys` is an Go API wrapper around the [Censys Search API](https://search.censys.io/api).
 
 This is *_NOT_* and official Censys library, and it is not supported by or affiliated with Censys at this time. I do not own Censys trademarks or copyrights.
